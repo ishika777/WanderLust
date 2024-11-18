@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+    <div class="container-fluid">
+        
+        <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
+        
+        <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        
+            <span class="navbar-toggler-icon"></span>
+        
+        </button> -->
+        
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        
+            <div class="navbar-nav">
+        
+                <a class="nav-link" href="/listings">Explore</a>
+        
+                <a class="nav-link" href="/listings/new">Airbnb your Home</a>
+        
+            </div>
+
+            <div class="navbar-nav ms-auto">
+
+                <% if(!currUser){ %>
+                    <a class="nav-link" href="/signup">Sign Up</a>
+            
+                    <a class="nav-link" href="/login">Log In</a>
+
+                <% } %>
+                
+                <% if( currUser){ %>
+
+                    <a class="nav-link" href="/logout">Log Out</a>
+                    
+                <% } %>
+        
+        
+            </div>
+        
+        </div>
+    
+    </div>
+</nav>
+<!-- <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const icon = document.getElementById('dropdownIcon');
+        const select = document.getElementById('dropdownSelect');
+
+        icon.addEventListener('click', () => {
+            // Toggle the display property of the select element
+            if (select.style.display === 'none') {
+                select.style.display = 'block';
+            } else {
+                select.style.display = 'none';
+            }
+        });
+
+        // Close the dropdown if clicked outside
+        document.addEventListener('click', (event) => {
+            if (!icon.contains(event.target) && !select.contains(event.target)) {
+                select.style.display = 'none';
+            }
+        });
+    });
+</script> -->
