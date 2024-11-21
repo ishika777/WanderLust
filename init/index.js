@@ -4,7 +4,7 @@ const initData = require("./data.js");
 const Listing = require("../models/listing.js");
 // const Translation = require("../models/translation.js");
 
-const axios = require('axios');
+// const axios = require('axios');
 
 
 //mongoose setup
@@ -17,9 +17,9 @@ async function main() {
 }
 
 
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+// function delay(ms) {
+//     return new Promise(resolve => setTimeout(resolve, ms));
+// }
 
 
 

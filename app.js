@@ -9,6 +9,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
+const MongoStore = require("connect-mongo")
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -19,14 +20,14 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
-
+const dbUrl = process.env.ATLASDB_URL;
 
 main()
 .then(() => console.log("connected to db"))
 .catch(err => console.log(err));
 
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
+    await mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 }
 
 app.set("view engine", "ejs");
@@ -36,7 +37,21 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
 
+
+const store = MongoStore.create({
+    mongoUrl : dbUrl,
+    crypto : {
+        secret : "mysupersecretcode"
+    },
+    touchAfter : 24*3600
+})
+
+store.on("errror", () => {
+    console.log("error in mongo session store", err)
+})
+
 const sessionOption = {
+    store,
     secret : "mysupersecretcode",
     resave : false,
     saveUninitialized : true,
@@ -46,6 +61,7 @@ const sessionOption = {
         httpOnly : true,
     }
 };
+
 
 
 app.use(session(sessionOption));
@@ -58,19 +74,16 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 
-app.use((req, res, next) => {
-    // res.locals.lang = req.session.language || "en";  
+app.use((req, res, next) => { 
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user;   
     next();
 })
 
-
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
-
 
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found!"));

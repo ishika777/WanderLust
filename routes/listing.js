@@ -13,7 +13,7 @@ const upload = multer({storage});
 // /listings
 
 
-router.route("/")
+router.route("/") 
 //index route
 .get(wrapAsync(listingController.index))                                                 
 //create route
@@ -22,14 +22,11 @@ router.route("/")
     validateListing, 
     wrapAsync(listingController.createListing));
 
-
-
-
 //new route
-router.get("/new", isLoggedIn, listingController.renderNewForm);                           
+router.get("/new", isLoggedIn, listingController.renderNewForm);                
 
 
-router.route("/:id")
+router.route("/:id") 
 //show route
 .get(wrapAsync(listingController.showLisitng))                                            
 //update route

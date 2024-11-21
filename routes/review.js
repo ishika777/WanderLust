@@ -6,12 +6,6 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const {isLoggedIn, validateReview, isReviewAuthor} = require("../middleware.js");
 const reviewController = require("../controllers/review.js");
 
-
-// /listings/:id/reviews
-
-
-
-
 //create review
 router.post("/",isLoggedIn, validateReview, wrapAsync(reviewController.createReview));
 
