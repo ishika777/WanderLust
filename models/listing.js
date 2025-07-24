@@ -29,10 +29,6 @@ const listingSchema = new Schema({
         type : Schema.Types.ObjectId,
         ref : "User",
     },
-    // translation: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Translation' 
-    // },
 });
 
 listingSchema.post("findOneAndDelete", async(lisitng) => {
